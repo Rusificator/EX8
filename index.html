@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 8</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="styleform.css">
+    <!-- Slick Slider CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+</head>
+
+<body>
+    <!-- Шапка -->
+    <header class="bg-primary text-white">
+        <div class="container">
+            <div class="row align-items-center py-3">
+                <!-- Логотип и заголовок -->
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                        <div class="logo me-4">
+                            <a href="index.html"><img src="KubGU.png" alt="Логотип КубГУ" class="img-fluid" style="max-width: 100px;"></a>
+                        </div>
+                        <div class="header-bottom">
+                            <h1 class="h4 mb-0">Задание 8</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Навигация -->
+                <div class="col-md-6">
+                    <nav>
+                        <ul class="nav justify-content-md-end justify-content-start flex-column flex-md-row">
+                            <li class="nav-item"><a class="nav-link text-white" href="index.html">Главная</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="#calculator">Калькулятор</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="#form">Форма</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" href="#gallery">Галерея</a></li>
+                             <li class="nav-item">
+                                <button id="openFeedbackBtn" class="nav-link text-white">Обратная связь</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+
+    <main class="container my-4">
+        <div class="row">
+            <!-- Секция ссылок -->
+            <div class="col-lg-14 order-lg-1 order-2">
+                <section class="links-section bg-light p-4 rounded mb-4">
+                    <h2 class="h4 text-primary mb-3">Маркированный список</h2>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 p-2 bg-white rounded">1. <a href="http://kubsu.ru/" class="text-decoration-none">Абсолютная ссылка на kubsu.ru (HTTP)</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">2. <a href="https://kubsu.ru/" class="text-decoration-none">Абсолютная ссылка на kubsu.ru (HTTPS)</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">3. Ссылка-изображение: <a href="https://kubsu.ru/"><img src="18-02-2017_27.jpg" alt="Логотип КубГУ" class="img-fluid mt-2" style="max-width: 150px;"></a></li>
+                        <li class="mb-2 p-2 bg-white rounded">4. <a href="internal-page.html" class="text-decoration-none">Сокращенная ссылка на внутреннюю страницу</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">5. <a href="index.html" class="text-decoration-none">Сокращенная ссылка на главную страницу</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">6. <a href="#fragment" class="text-decoration-none">Ссылка на фрагмент текущей страницы</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">7. <a href="https://www.kubsu.ru/ru/search?keys=образование&category=8&year=2023" class="text-decoration-none">Ссылка с тремя параметрами в URL</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">8. <a href="https://www.kubsu.ru/ru/node/38730?id=12345" class="text-decoration-none">Ссылка с параметром id в URL</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">9. <a href="current-page.html" class="text-decoration-none">Относительная ссылка на страницу в текущем каталоге</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">10. <a href="about/about-page.html" class="text-decoration-none">Относительная ссылка на страницу в каталоге about</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">11. <a href="LUP/LUP-page.html" class="text-decoration-none">Относительная ссылка на страницу уровнем выше</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">12. <a href="LUPUP/LUP/LUPUP.html" class="text-decoration-none">Относительная ссылка на страницу двумя уровнями выше</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">13. Контекстная ссылка: <p class="mb-0 mt-1">Это абзац текста, в котором находится <a href="https://kubsu.ru" class="text-decoration-none">контекстная ссылка</a> на сайт КубГУ.</p></li>
+                        <li class="mb-2 p-2 bg-white rounded">14. <a href="https://ru.wikipedia.org/wiki/HTML#Версии" class="text-decoration-none">Ссылка на фрагмент страницы стороннего сайта (Wikipedia - HTML)</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">16. <a href="" class="text-decoration-none">Ссылка с пустым href</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">17. <a class="text-decoration-none">Ссылка без href</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">18. <a href="https://kubsu.ru" rel="nofollow" class="text-decoration-none">Ссылка, по которой запрещен переход поисковикам</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">19. <a href="https://kubsu.ru" rel="noindex" class="text-decoration-none">Ссылка, запрещенная для индексации поисковиками</a></li>
+                        <li class="mb-2 p-2 bg-white rounded">21. <a href="ftp://example.com/" class="text-decoration-none">Ссылка на файл на сервере FTP с авторизацией</a></li>
+                    </ul>
+
+                    <h2 class="h4 text-primary mt-4 mb-3">15. Ссылки из областей картинки</h2>
+                    <p class="fst-italic">Дерево - ссылка на английскую версию сайта КУБГУ</p>
+                    <p class="fst-italic">Надпись - ссылка на русскую версию сайта КУБГУ</p>
+                    
+                    <div class="text-center">
+                        <img src="18-02-2017_27.jpg" alt="Пример изображения с областями" usemap="#examplemap" class="img-fluid rounded">
+                        <map name="examplemap">
+                            <area shape="rect" coords="0,275,400,400" href="https://kubsu.ru" alt="Прямоугольная область" title="https://kubsu.ru">
+                            <area shape="circle" coords="200,105,150" href="https://kubsu.ru/en" alt="Круглая область" title="https://kubsu.ru/en">
+                        </map>
+                    </div>
+
+                    <h2 class="h4 text-primary mt-4 mb-3">20. Нумерованный список ссылок с подписями title</h2>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item"><a href="https://kubsu.ru" title="Официальный сайт Кубанского государственного университета" class="text-decoration-none">Сайт КубГУ</a></li>
+                        <li class="list-group-item"><a href="https://kubsu.ru/ru/university" title="Информация об университете" class="text-decoration-none">Об университете</a></li>
+                        <li class="list-group-item"><a href="https://kubsu.ru/ru/education" title="Образовательные программы" class="text-decoration-none">Образование</a></li>
+                        <li class="list-group-item"><a href="https://kubsu.ru/ru/science" title="Научная деятельность" class="text-decoration-none">Наука</a></li>
+                        <li class="list-group-item"><a href="https://kubsu.ru/ru/abiturient" title="Информация для абитуриентов" class="text-decoration-none">Абитуриентам</a></li>
+                    </ol>
+
+                    <section class="mt-4">
+                        <h2 id="fragment" class="h4 text-primary">Фрагмент текущей страницы</h2>
+                        <p class="p-3 bg-white rounded">Это фрагмент страницы, на который ведет ссылка из первого раздела.(п.6)</p>
+                    </section>
+                </section>
+            </div>
+
+            <!-- Секция таблицы -->
+            <div class="col-lg-14 order-lg-2 order-1">
+                <!-- Таблица -->
+                <section class="table-section bg-light p-4 rounded mb-4">
+                    <h2 class="h4 text-primary mb-3">Таблица</h2>
+                    <p class="fst-italic">Внезапный топ 20 фильмов 2024 года по рейтингу Кинопоиска.</p>
+                    <p class="fst-italic">Номер в рейтинге(по убыванию рейтинга).</p>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">№</th>
+                                    <th scope="col">Балл</th>
+                                    <th scope="col">Фильм</th>
+                                    <th scope="col">Страна</th>
+                                    <th scope="col">Жанр</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>8.6</td>
+                                            <td>Рай под ногами матерей</td>
+                                            <td>Кыргызстан</td>
+                                            
+                                            <td>Драма</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>8.3</td>
+                                            <td>Артур, ты король</td>
+                                            <td>США, Канада</td>
+                                           
+                                            <td>драма, приключения, спорт</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>8.2</td>
+                                            <td>Лёд 3</td>
+                                            <td>Россия</td>
+                                           
+                                            <td>спорт, мюзикл, мелодрама</td>
+                                        
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>8.1</td>
+                                            <td>Граф Монте-Кристо</td>
+                                            <td>Франция, Бельгия</td>
+                                           
+                                            <td>триллер, драма, мелодрама</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>7.7</td>
+                                            <td>Домовенок Кузя</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>комедия, семейный, фэнтези</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>7.7</td>
+                                            <td>Огниво</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>фэнтези, приключения, семейный</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>7.6</td>
+                                            <td>Сто лет тому вперёд</td>
+                                            <td>Россия</td>
+                                           
+                                            <td>фантастика, приключения, семейный</td>
+                                           
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                            <td>7.6</td>
+                                            <td>Иван Царевич и Серый Волк 6</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>мультфильм, приключения, фэнтези, семейный</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>7.5</td>
+                                            <td>Маме снова 17</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>комедия, фантастика</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>7.5</td>
+                                            <td>Баба Яга спасает Новый год</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>фэнтези, комедия, приключения, семейный</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>11</td>
+                                            <td>7.5</td>
+                                            <td>Майор Гром: Игра</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>боевик, приключения</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>12</td>
+                                            <td>7.4</td>
+                                            <td>Онегин</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>мелодрама, драма</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>13</td>
+                                            <td>7.4</td>
+                                            <td>Семейный переполох</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>комедия, семейный</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>14</td>
+                                            <td>7.3</td>
+                                            <td>Беляковы в отпуске</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>комедия</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>15</td>
+                                            <td>7.3</td>
+                                            <td>Любовь Советского Союза</td>
+                                            <td>Россия</td>
+                                            
+                                            <td>драма</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>16</td>
+                                            <td>7.3</td>
+                                            <td>Министерство неджентльменских дел</td>
+                                            <td>США, Великобритания, Турция</td>
+                                           
+                                            <td>боевик, комедия, военный, история</td>
+                                           
+                                        </tr>
+                                        <tr>
+                                            <td>17</td>
+                                            <td>7.2</td>
+                                            <td>Пчеловод</td>
+                                            <td>Великобритания, США</td>
+                                            
+                                            <td>боевик, криминал</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>18</td>
+                                            <td>7.1</td>
+                                            <td>Материнский инстинкт</td>
+                                            <td>США, Бельгия, Франция, Великобритания</td>
+                                            
+                                            <td>драма, триллер</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>19</td>
+                                            <td rowspan="2">7.1</td>
+                                            <td>Волшебник Изумрудного города. Дорога из жёлтого кирпича</td>
+                                            <td rowspan="2">Россия</td>
+                                            
+                                            <td>фэнтези, приключения, семейный</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>20</td>
+                                            <td>Постучись в мою Тверь</td>
+                                           
+                                            <td>комедия, мелодрама</td>
+                                        </tr>
+                                    </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+                        
+                       <!-- Галерея -->
+            <div class="col-12 order-3">
+                <section id="gallery" class="gallery-section bg-light p-4 rounded mb-4">
+                    <h2 class="h4 text-primary mb-3">Галерея изображений</h2>
+                    <div class="gallery-container">
+                        <div class="slider-wrapper">
+                            <div class="gallery-slider">
+                                <div class="slide">
+                                    <img src="photo.jfif" alt="Изображение 1" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo2.jpg" alt="Изображение 2" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo3.jpg" alt="Изображение 3" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo4.jpg" alt="Изображение 4" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo5.jpg" alt="Изображение 5" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo4.jfif" alt="Изображение 6" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo7.jpg" alt="Изображение 7" class="img-fluid rounded">
+                                </div>
+                                <div class="slide">
+                                    <img src="photo6.jpg" alt="Изображение 8" class="img-fluid rounded">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls d-flex justify-content-between align-items-center mt-3">
+                            <button class="slider-arrow slider-prev btn btn-primary">←</button>
+                            <div class="slider-pager text-center">
+                                <div class="pager-numbers">
+                                    <span class="current-page">1</span> / <span class="total-pages">3</span>
+                                </div>
+                                <div class="pager-dots">
+                                    <!-- Dots will be generated by JavaScript -->
+                                </div>
+                            </div>
+                            <button class="slider-arrow slider-next btn btn-primary">→</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+<!-- Калькулятор -->
+<div class="container mt-5 order-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-14">
+            <div id="calculator" class="calculator card shadow">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%);">
+                    <h2 class="h4 mb-0">Калькулятор стоимости услуги</h2>
+                </div>
+                <div class="card-body">
+                    <form id="orderForm" class="needs-validation" novalidate>
+                        <!-- Выбор типа услуги радиокнопками -->
+                        <div class="mb-3 form-section">
+                            <label class="form-label">Тип услуги:</label>
+                            <div class="form-check">
+                                <input class="form-check-input service-type" type="radio" name="serviceType" id="type1" value="basic" checked required>
+                                <label class="form-check-label" for="type1">Базовая услуга - 1000 руб.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input service-type" type="radio" name="serviceType" id="type2" value="standard" required>
+                                <label class="form-check-label" for="type2">Стандартная услуга - 2000 руб.</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input service-type" type="radio" name="serviceType" id="type3" value="premium" required>
+                                <label class="form-check-label" for="type3">Премиум услуга - 5000 руб.</label>
+                            </div>
+                        </div>
+
+                        <!-- Поле для ввода количества -->
+                        <div class="mb-3 form-section">
+                            <label for="quantityInput" class="form-label">Количество:</label>
+                            <input type="number" class="form-control" id="quantityInput" placeholder="Введите количество" min="1" required>
+                            <div class="invalid-feedback">Введите целое положительное число</div>
+                        </div>
+
+                        <!-- Динамические опции (селект) -->
+                        <div class="mb-3 form-section" id="optionsSection" style="display: none;">
+                            <label for="optionsSelect" class="form-label">Опция услуги:</label>
+                            <select class="form-select" id="optionsSelect">
+                                <option value="0">Без дополнительной опции</option>
+                                <option value="500">Срочное выполнение (+500 руб.)</option>
+                                <option value="1000">Расширенная поддержка (+1000 руб.)</option>
+                                <option value="1500">Премиум пакет (+1500 руб.)</option>
+                            </select>
+                        </div>
+
+                        <!-- Динамические свойства (чекбокс) -->
+                        <div class="mb-3 form-section" id="propertiesSection" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="propertyCheckbox">
+                                <label class="form-check-label" for="propertyCheckbox">
+                                    Дополнительная гарантия (+1000 руб.)
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 calculator-button">Рассчитать стоимость</button>
+                    </form>
+                    <div class="mt-4">
+                        <h3 class="h5">Стоимость заказа: <span id="totalCost" class="text-primary">0</span> руб.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                <!-- Форма -->
+            <div id="form" class="col-lg-14 order-5">
+                <section class="form-section bg-light p-4 rounded">
+                    <h2 class="h4 text-primary mb-3">Форма</h2>
+                    <form id="userForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Имя:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="form-text text-danger">Пожалуйста, введите ваше имя</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Телефон:</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required pattern="^\+7\d{10}$" placeholder="+71234567890">
+                            <div class="form-text text-danger">Пожалуйста, введите телефон в формате +7</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="form-text text-danger">Пожалуйста, введите корректный email</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="birthdate" class="form-label">Дата рождения:</label>
+                            <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                            <div class="form-text text-danger">Пожалуйста, выберите дату рождения</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="form-label">Пол:</span>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                                <label class="form-check-label" for="male">Мужской</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                <label class="form-check-label" for="female">Женский</label>
+                            </div>
+                            <div class="form-text text-danger">Пожалуйста, выберите пол</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="languages" class="form-label">Любимый язык программирования:</label>
+                            <select multiple class="form-select" id="languages" name="languages" size="4">
+                                <option value="pascal">Pascal</option>
+                                <option value="Python">Python</option>
+                                <option value="C++">C++</option>
+                                <option value="C">C</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="PHP">PHP</option>
+                                <option value="Java">Java</option>
+                                <option value="Haskel">Haskel</option>
+                                <option value="Clojure">Clojure</option>
+                                <option value="Prolog">Scala</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Биография:</label>
+                            <textarea class="form-control" id="bio" name="bio" required minlength="10" rows="3"></textarea>
+                            <div class="form-text text-danger">Введите минимум 10 символов</div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreement" name="agreement" required>
+                            <label class="form-check-label" for="agreement">С контрактом ознакомлен(а)</label>
+                            <div class="form-text text-danger">Необходимо принять условия соглашения</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Сохранить</button>
+                    </form>
+                </section>
+            </div>
+       
+        
+    </main>
+
+    <!-- Подвал -->
+    <footer class="bg-dark text-white py-4 mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-1">"Abracadabra studio"</p>
+                    <p class="mb-0">Касьянов Руслан - разработка пользовательского web-интерфейса</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Slick Slider JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+     <!-- Подключение внешних JS-файлов -->
+    <script src="calculator.js" defer></script>
+    <script src="controlform.js" defer></script>
+    <script src="gallery.js" defer></script>
+    <script src="form8.js" defer></script>
+
+
+
+<!-- Попап с формой обратной связи -->
+<div id="feedbackPopup" class="feedback-popup">
+    <div class="feedback-form-container">
+        <button class="close-btn" id="closeFeedbackBtn">&times;</button>
+        <h2>Обратная связь</h2>
+        <form id="feedbackForm">
+            <div class="mb-3">
+                <label for="fullName" class="form-label">ФИО *</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="phone" class="form-label">Телефон</label>
+                <input type="tel" class="form-control" id="phone" name="phone">
+            </div>
+            
+            <div class="mb-3">
+                <label for="organization" class="form-label">Организация</label>
+                <input type="text" class="form-control" id="organization" name="organization">
+            </div>
+            
+            <div class="mb-3">
+                <label for="message" class="form-label">Сообщение *</label>
+                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+            </div>
+            
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="privacyPolicy" name="privacyPolicy" required>
+                <label class="form-check-label" for="privacyPolicy">
+                    Согласен с политикой обработки персональных данных *
+                </label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Отправить</button>
+            
+            <div id="formMessage" class="message" style="display: none;"></div>
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>

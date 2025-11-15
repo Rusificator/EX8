@@ -1,0 +1,383 @@
+/* Mobile First - Дополнительные кастомные стили */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* Кастомные стили для header */
+header {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%) !important;
+}
+footer {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%) !important;
+}
+.logo img {
+    border-radius: 5px;
+}
+
+/* Кастомные стили для ссылок */
+.links-section a {
+    color: #1a237e;
+    transition: color 0.3s ease;
+}
+
+.links-section a:hover {
+    color: #283593;
+    text-decoration: underline !important;
+}
+
+/* Кастомные стили для таблицы */
+.table-section table {
+    box-shadow: 0 2px 8px rgba(58, 57, 57, 0.1);
+}
+
+.table-section th {
+    background-color: #1a237e!important;
+    color: white;
+}
+
+/* Кастомные стили для формы */
+.form-section .form-control:focus {
+    border-color: #1a237e;
+    box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+}
+
+.form-section .btn-primary {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.form-section .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптивность изображений */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Дополнительные отступы для мобильных устройств */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .links-section,
+    .table-section,
+    .form-section {
+        margin-bottom: 1rem;
+    }
+
+    
+      .calculator {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .calculator-display {
+        font-size: 1.2rem;
+        padding: 12px;
+    }
+    
+    .calculator-button {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+/* Стили для карты изображения */
+map area {
+    cursor: pointer;
+}
+
+/* Улучшение читаемости текста */
+.text-primary {
+    color: #1a237e !important;
+}
+
+/* тени для карточек */
+.bg-light.rounded {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для калькулятора */
+.calculator {
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.calculator-display {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    text-align: right;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #333;
+    transition: all 0.3s ease;
+    
+}
+
+.calculator-display:focus {
+    border-color: #1a237e;
+    box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+    outline: none;
+}
+
+.calculator-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calculator-button {
+    padding: 15px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calculator-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.calculator-button:active {
+    transform: translateY(0);
+}
+
+.calculator-button.operator {
+    background: linear-gradient(135deg, #283593 0%, #3949ab 100%);
+}
+
+.calculator-button.equals {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+}
+
+.calculator-button.clear {
+    background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%);
+}
+
+/* Стили для динамических секций калькулятора */
+#optionsSection, #propertiesSection {
+    transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+    background-color: #1a237e;
+    border-color: #1a237e;
+}
+
+/* Анимация появления дополнительных опций */
+.form-section {
+    transition: all 0.3s ease;
+}
+
+/* Улучшение внешнего вида радиокнопок */
+.service-type {
+    margin-bottom: 0.5rem;
+}
+
+.service-type:focus {
+    border-color: #1a237e;
+    box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+}
+
+/* Стили для галереи */
+.gallery-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-slider {
+    display: flex;
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+.gallery-slider .slide {
+    flex: 0 0 33.333%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-slider img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.slider-controls {
+    max-width: 300px;
+    margin: 20px auto 0;
+}
+
+.slider-pager {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #1a237e;
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.pager-numbers {
+    display: block;
+}
+
+.pager-dots {
+    display: none;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background-color: #1a237e;
+    transform: scale(1.2);
+}
+
+.slider-arrow {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    color: white;
+    font-weight: bold;
+}
+
+.slider-arrow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Visual feedback for cyclic navigation */
+.slider-arrow.cyclic-prev::after {
+    content: '↶';
+    position: absolute;
+    font-size: 0.7em;
+    bottom: -5px;
+    right: -5px;
+}
+
+.slider-arrow.cyclic-next::after {
+    content: '↷';
+    position: absolute;
+    font-size: 0.7em;
+    bottom: -5px;
+    left: -5px;
+}
+
+/* Адаптивность галереи */
+@media (max-width: 768px) {
+    .gallery-slider .slide {
+        flex: 0 0 100%;
+    }
+    
+    .gallery-slider img {
+        max-height: 350px;
+    }
+    
+    .pager-numbers {
+        display: block;
+    }
+    
+    .pager-dots {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .gallery-slider .slide {
+        flex: 0 0 50%;
+    }
+    
+    .gallery-slider img {
+        max-height: 350px;
+    }
+    
+    .pager-numbers {
+        display: block;
+    }
+    
+    .pager-dots {
+        display: none;
+    }
+}
+
+@media (min-width: 1025px) {
+    .gallery-slider img {
+        max-height: 450px;
+    }
+    
+    .pager-numbers {
+        display: none;
+    }
+    
+    .pager-dots {
+        display: flex;
+    }
+}
+
+/* Галерея теперь не выходит за пределы контейнера */
+.gallery-section {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Центрирование содержимого слайдов */
+.slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
