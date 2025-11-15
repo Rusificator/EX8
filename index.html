@@ -38,9 +38,7 @@
                             <li class="nav-item"><a class="nav-link text-white" href="#calculator">Калькулятор</a></li>
                             <li class="nav-item"><a class="nav-link text-white" href="#form">Форма</a></li>
                             <li class="nav-item"><a class="nav-link text-white" href="#gallery">Галерея</a></li>
-                             <li class="nav-item">
-                                <button id="openFeedbackBtn" class="nav-link text-white">Обратная связь</button>
-                            </li>
+                            <li class="nav-item"><button id="openFeedbackBtn" class="nav-link text-white">Обратная связь</button></li>
                         </ul>
                     </nav>
                 </div>
@@ -536,40 +534,40 @@
         <h2>Обратная связь</h2>
         <form id="feedbackForm">
             <div class="mb-3">
-                <label for="fullName" class="form-label">ФИО *</label>
-                <input type="text" class="form-control" id="fullName" name="fullName" required>
+                <label for="feedback-fullName" class="form-label">ФИО *</label>
+                <input type="text" class="form-control" id="feedback-fullName" name="fullName" required>
             </div>
             
             <div class="mb-3">
-                <label for="email" class="form-label">Email *</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <label for="feedback-email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="feedback-email" name="email" required>
             </div>
             
             <div class="mb-3">
-                <label for="phone" class="form-label">Телефон</label>
-                <input type="tel" class="form-control" id="phone" name="phone">
+                <label for="feedback-phone" class="form-label">Телефон</label>
+                <input type="tel" class="form-control" id="feedback-phone" name="phone">
             </div>
             
             <div class="mb-3">
-                <label for="organization" class="form-label">Организация</label>
-                <input type="text" class="form-control" id="organization" name="organization">
+                <label for="feedback-organization" class="form-label">Организация</label>
+                <input type="text" class="form-control" id="feedback-organization" name="organization">
             </div>
             
             <div class="mb-3">
-                <label for="message" class="form-label">Сообщение *</label>
-                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                <label for="feedback-message" class="form-label">Сообщение *</label>
+                <textarea class="form-control" id="feedback-message" name="message" rows="4" required></textarea>
             </div>
             
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="privacyPolicy" name="privacyPolicy" required>
-                <label class="form-check-label" for="privacyPolicy">
+                <input type="checkbox" class="form-check-input" id="feedback-privacyPolicy" name="privacyPolicy" required>
+                <label class="form-check-label" for="feedback-privacyPolicy">
                     Согласен с политикой обработки персональных данных *
                 </label>
             </div>
             
             <button type="submit" class="btn btn-primary w-100">Отправить</button>
             
-            <div id="formMessage" class="message" style="display: none;"></div>
+            <div id="feedback-formMessage" class="message" style="display: none;"></div>
         </form>
     </div>
 </div>
