@@ -4,45 +4,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
     const feedbackPopup = document.getElementById('feedbackPopup');
     const feedbackForm = document.getElementById('feedbackForm');
-    const formMessage = document.getElementById('formMessage');
+    const formMessage = document.getElementById('feedback-formMessage');
     
-    // URL для отправки формы (ваша ссылка от formcarry)
+    // URL для отправки формы
     const FORM_SUBMISSION_URL = 'https://formcarry.com/s/_na1c8kkBc4';
+    
+    // Флаг для отслеживания состояния формы
+    let isFormOpen = false;
+    let isInitialLoad = true;
     
     // Функция для открытия формы
     function openFeedbackForm() {
+        if (isFormOpen) return;
+        
         feedbackPopup.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
-        // Изменяем URL с помощью History API
-        history.pushState({ formOpen: true }, '', '#feedback');
+        document.body.style.overflow = 'hidden';
+        isFormOpen = true;
+        
+        // Изменяем URL с помощью History API только если это не начальная загрузка
+        if (!isInitialLoad) {
+            history.pushState({ formOpen: true }, '', '#feedback');
+        }
+        isInitialLoad = false;
+        
         // Восстанавливаем сохраненные данные
         restoreFormData();
     }
     
     // Функция для закрытия формы
     function closeFeedbackForm() {
+        if (!isFormOpen) return;
+        
         feedbackPopup.classList.remove('active');
-        document.body.style.overflow = ''; // Восстанавливаем прокрутку страницы
-        // Возвращаем URL к исходному состоянию
-        if (history.state && history.state.formOpen) {
-            history.back();
-        }
+        document.body.style.overflow = '';
+        isFormOpen = false;
+        
         // Скрываем сообщение
+        hideMessage();
+        
+        // Если URL содержит #feedback, убираем его
+        if (window.location.hash === '#feedback') {
+            // Используем replaceState чтобы не создавать новую запись в истории
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    }
+    
+    // Функция для принудительного закрытия формы (при нажатии назад)
+    function forceCloseFeedbackForm() {
+        if (!isFormOpen) return;
+        
+        feedbackPopup.classList.remove('active');
+        document.body.style.overflow = '';
+        isFormOpen = false;
         hideMessage();
     }
     
     // Функция для сохранения данных формы в LocalStorage
     function saveFormData() {
         const formData = {
-            fullName: document.getElementById('fullName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            organization: document.getElementById('organization').value,
-            message: document.getElementById('message').value,
-            privacyPolicy: document.getElementById('privacyPolicy').checked
+            fullName: document.getElementById('feedback-fullName').value,
+            email: document.getElementById('feedback-email').value,
+            phone: document.getElementById('feedback-phone').value,
+            organization: document.getElementById('feedback-organization').value,
+            message: document.getElementById('feedback-message').value,
+            privacyPolicy: document.getElementById('feedback-privacyPolicy').checked
         };
         localStorage.setItem('feedbackFormData', JSON.stringify(formData));
-        console.log('Данные сохранены в LocalStorage:', formData);
     }
     
     // Функция для восстановления данных формы из LocalStorage
@@ -51,16 +78,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedData) {
             try {
                 const formData = JSON.parse(savedData);
-                document.getElementById('fullName').value = formData.fullName || '';
-                document.getElementById('email').value = formData.email || '';
-                document.getElementById('phone').value = formData.phone || '';
-                document.getElementById('organization').value = formData.organization || '';
-                document.getElementById('message').value = formData.message || '';
-                document.getElementById('privacyPolicy').checked = formData.privacyPolicy || false;
-                console.log('Данные восстановлены из LocalStorage:', formData);
+                document.getElementById('feedback-fullName').value = formData.fullName || '';
+                document.getElementById('feedback-email').value = formData.email || '';
+                document.getElementById('feedback-phone').value = formData.phone || '';
+                document.getElementById('feedback-organization').value = formData.organization || '';
+                document.getElementById('feedback-message').value = formData.message || '';
+                document.getElementById('feedback-privacyPolicy').checked = formData.privacyPolicy || false;
             } catch (e) {
                 console.error('Ошибка при восстановлении данных:', e);
-                // Если данные повреждены, очищаем LocalStorage
                 localStorage.removeItem('feedbackFormData');
             }
         }
@@ -69,8 +94,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция для очистки данных формы в LocalStorage
     function clearFormData() {
         localStorage.removeItem('feedbackFormData');
+    }
+    
+    // Функция для сброса формы (без очистки LocalStorage)
+    function resetForm() {
         feedbackForm.reset();
-        console.log('Данные очищены из LocalStorage');
     }
     
     // Функция для отображения сообщения
@@ -104,8 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(feedbackForm);
         const data = Object.fromEntries(formData);
         
-        console.log('Отправка данных:', data);
-        
         // Отправляем данные на сервер с помощью fetch
         fetch(FORM_SUBMISSION_URL, {
             method: 'POST',
@@ -116,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(data)
         })
         .then(response => {
-            console.log('Получен ответ от сервера:', response);
             if (response.ok) {
                 return response.json();
             } else {
@@ -124,20 +149,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(data => {
-            console.log('Данные ответа:', data);
             // Formcarry возвращает статус в поле code или status
             if (data.code === 200 || data.status === 'success') {
                 // Показываем сообщение об успехе
                 showMessage('Форма успешно отправлена! Мы свяжемся с вами в ближайшее время.', true);
-                // Очищаем данные формы
-                clearFormData();
-                // НЕ закрываем форму автоматически - пользователь должен видеть сообщение
+                // Очищаем данные формы И LocalStorage только после успешной отправки
+                setTimeout(() => {
+                    resetForm();
+                    clearFormData();
+                }, 100);
             } else {
                 throw new Error(data.message || 'Ошибка отправки формы');
             }
         })
         .catch(error => {
-            console.error('Ошибка отправки формы:', error);
             // Показываем сообщение об ошибке
             showMessage('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз или свяжитесь с нами другим способом.', false);
         })
@@ -149,22 +174,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Обработчики событий для элементов формы для сохранения данных
-    const formInputs = feedbackForm.querySelectorAll('input, textarea, select');
+    const formInputs = feedbackForm.querySelectorAll('input, textarea');
     formInputs.forEach(input => {
         input.addEventListener('input', saveFormData);
         input.addEventListener('change', saveFormData);
     });
     
+    // Отдельный обработчик для чекбокса
+    document.getElementById('feedback-privacyPolicy').addEventListener('change', saveFormData);
+    
     // Обработчики событий для кнопок открытия/закрытия
-    openFeedbackBtn.addEventListener('click', openFeedbackForm);
+    openFeedbackBtn.addEventListener('click', function() {
+        isInitialLoad = false;
+        openFeedbackForm();
+    });
+    
     closeFeedbackBtn.addEventListener('click', closeFeedbackForm);
     
     // Обработчик события popstate для поддержки кнопки "Назад"
     window.addEventListener('popstate', function(e) {
-        if (window.location.hash === '#feedback') {
+        // Если нажали "Назад" и форма открыта - закрываем её
+        if (isFormOpen) {
+            forceCloseFeedbackForm();
+        }
+        // Если нажали "Вперед" к форме и она закрыта - открываем её
+        else if (window.location.hash === '#feedback') {
             openFeedbackForm();
-        } else {
-            closeFeedbackForm();
         }
     });
     
