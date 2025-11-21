@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const feedbackPopup = document.getElementById('feedbackPopup');
     const feedbackForm = document.getElementById('feedbackForm');
     const formMessage = document.getElementById('feedback-formMessage');
+    const feedbackPhone = document.getElementById('feedback-phone');
     
     // URL для отправки формы
     const FORM_SUBMISSION_URL = 'https://formcarry.com/s/_na1c8kkBc4';
@@ -13,13 +14,92 @@ document.addEventListener('DOMContentLoaded', function() {
     let isFormOpen = false;
     let isInitialLoad = true;
     
-    // Функция для открытия формы
+    // Функция для валидации телефона
+    function validatePhone(phone) {
+        // Разрешаем форматы: +7XXXXXXXXXX, 8XXXXXXXXXX, +375XXXXXXXXX, и другие международные форматы
+        const phoneRegex = /^(\+7|8|\+?\d{1,3})?[-\s]?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
+        return phoneRegex.test(phone);
+    }
+    
+    // Функция для форматирования телефона
+    function formatPhone(phone) {
+        // Удаляем все нецифровые символы кроме +
+        let cleaned = phone.replace(/[^\d+]/g, '');
+        
+        // Если номер начинается с 8, заменяем на +7
+        if (cleaned.startsWith('8') && cleaned.length === 11) {
+            cleaned = '+7' + cleaned.slice(1);
+        }
+        // Если номер начинается с 7 и нет +, добавляем +
+        else if (cleaned.startsWith('7') && cleaned.length === 11 && !cleaned.startsWith('+7')) {
+            cleaned = '+7' + cleaned.slice(1);
+        }
+        // Если номер без кода страны, добавляем +7
+        else if (cleaned.length === 10 && !cleaned.startsWith('+')) {
+            cleaned = '+7' + cleaned;
+        }
+        
+        return cleaned;
+    }
+    
+    // Функция для показа ошибки телефона
+    function showPhoneError(message) {
+        feedbackPhone.classList.add('is-invalid');
+        const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error') || 
+                        document.createElement('div');
+        errorDiv.className = 'phone-error text-danger mt-1 small';
+        errorDiv.textContent = message;
+        if (!feedbackPhone.parentNode.querySelector('.phone-error')) {
+            feedbackPhone.parentNode.appendChild(errorDiv);
+        }
+    }
+    
+    // Функция для скрытия ошибки телефона
+    function hidePhoneError() {
+        feedbackPhone.classList.remove('is-invalid');
+        feedbackPhone.classList.add('is-valid');
+        const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error');
+        if (errorDiv) {
+            errorDiv.remove();
+        }
+    }
+    
+    // Обработчик ввода телефона
+    feedbackPhone.addEventListener('input', function(e) {
+        const phone = e.target.value;
+        
+        if (phone === '') {
+            feedbackPhone.classList.remove('is-invalid', 'is-valid');
+            const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error');
+            if (errorDiv) errorDiv.remove();
+            return;
+        }
+        
+        if (validatePhone(phone)) {
+            hidePhoneError();
+            // Автоформатирование при вводе
+            const formatted = formatPhone(phone);
+            if (formatted !== phone) {
+                e.target.value = formatted;
+            }
+        } else {
+            showPhoneError('Введите корректный номер телефона');
+        }
+    });
+    
+    // Функция для открытия формы с анимацией
     function openFeedbackForm() {
         if (isFormOpen) return;
         
-        feedbackPopup.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        isFormOpen = true;
+        // Показываем попап
+        feedbackPopup.style.display = 'flex';
+        
+        // Запускаем анимацию после отображения элемента
+        setTimeout(() => {
+            feedbackPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            isFormOpen = true;
+        }, 10);
         
         // Изменяем URL с помощью History API только если это не начальная загрузка
         if (!isInitialLoad) {
@@ -31,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         restoreFormData();
     }
     
-    // Функция для закрытия формы
+    // Функция для закрытия формы с анимацией
     function closeFeedbackForm() {
         if (!isFormOpen) return;
         
@@ -39,12 +119,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
         isFormOpen = false;
         
+        // Скрываем попап после завершения анимации
+        setTimeout(() => {
+            feedbackPopup.style.display = 'none';
+        }, 300);
+        
         // Скрываем сообщение
         hideMessage();
         
         // Если URL содержит #feedback, убираем его
         if (window.location.hash === '#feedback') {
-            // Используем replaceState чтобы не создавать новую запись в истории
             history.replaceState(null, '', window.location.pathname + window.location.search);
         }
     }
@@ -57,6 +141,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
         isFormOpen = false;
         hideMessage();
+        
+        setTimeout(() => {
+            feedbackPopup.style.display = 'none';
+        }, 300);
     }
     
     // Функция для сохранения данных формы в LocalStorage
@@ -99,6 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция для сброса формы (без очистки LocalStorage)
     function resetForm() {
         feedbackForm.reset();
+        // Сбрасываем классы валидации телефона
+        feedbackPhone.classList.remove('is-invalid', 'is-valid');
+        const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error');
+        if (errorDiv) errorDiv.remove();
     }
     
     // Функция для отображения сообщения
@@ -122,6 +214,14 @@ document.addEventListener('DOMContentLoaded', function() {
     feedbackForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
+        // Валидация телефона перед отправкой
+        const phone = feedbackPhone.value;
+        if (phone && !validatePhone(phone)) {
+            showPhoneError('Пожалуйста, введите корректный номер телефона');
+            feedbackPhone.focus();
+            return;
+        }
+        
         // Показываем индикатор загрузки
         const submitBtn = feedbackForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
@@ -131,6 +231,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Собираем данные формы
         const formData = new FormData(feedbackForm);
         const data = Object.fromEntries(formData);
+        
+        // Форматируем телефон перед отправкой
+        if (data.phone) {
+            data.phone = formatPhone(data.phone);
+        }
         
         // Отправляем данные на сервер с помощью fetch
         fetch(FORM_SUBMISSION_URL, {
@@ -180,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('change', saveFormData);
     });
     
-    // Отдельный обработчик для чекбокса
+    // Обработчик для чекбокса
     document.getElementById('feedback-privacyPolicy').addEventListener('change', saveFormData);
     
     // Обработчики событий для кнопок открытия/закрытия
@@ -222,3 +327,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+          
