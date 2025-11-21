@@ -11,41 +11,67 @@
     align-items: center;
     justify-content: center;
     padding: 15px;
+    opacity: 0;
+    transform: scale(0.1) translate(100%, -100%);
+    transform-origin: top right;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .feedback-popup.active {
-    display: flex;
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
 }
 
 .feedback-form-container {
     background-color: white;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 25px;
     width: 100%;
     max-width: 500px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     max-height: 95vh;
     overflow-y: auto;
     position: relative;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.3s ease 0.1s;
+}
+
+.feedback-popup.active .feedback-form-container {
+    transform: scale(1);
+    opacity: 1;
 }
 
 .feedback-popup h2 {
     margin-bottom: 20px;
     text-align: center;
     color: #333;
+    font-weight: 600;
 }
 
 .feedback-popup .form-control {
     margin-bottom: 15px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-radius: 6px;
+    padding: 12px;
+    transition: all 0.2s ease-in-out;
+    font-size: 14px;
 }
 
 .feedback-popup .form-control:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.feedback-popup .form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.feedback-popup .form-control.is-valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
 
 .feedback-popup .form-check {
@@ -58,9 +84,15 @@
 
 .feedback-popup .btn {
     margin-top: 10px;
-    padding: 10px;
+    padding: 12px;
     font-weight: 500;
-    transition: all 0.15s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    border-radius: 6px;
+}
+
+.feedback-popup .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .feedback-popup .btn:disabled {
@@ -68,15 +100,29 @@
     cursor: not-allowed;
     background-color: #6c757d;
     border-color: #6c757d;
+    transform: none;
+    box-shadow: none;
 }
 
 .message {
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     margin-top: 15px;
     text-align: center;
     font-weight: 500;
     display: none;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .message.success {
@@ -95,31 +141,34 @@
 
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     background: none;
     border: none;
     font-size: 24px;
     cursor: pointer;
     color: #6c757d;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: background-color 0.15s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    z-index: 10;
 }
 
 .close-btn:hover {
     color: #333;
     background-color: #f8f9fa;
+    transform: rotate(90deg);
 }
 
 .form-label {
     font-weight: 500;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #333;
+    display: block;
 }
 
 .form-check-label {
@@ -127,28 +176,101 @@
     cursor: pointer;
 }
 
+.phone-error {
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+/* Стили для индикации обязательных полей */
+.form-label:after {
+    content: " *";
+    color: #dc3545;
+}
+
+.form-label:not([for="feedback-phone"]):not([for="feedback-organization"]):after {
+    content: "";
+}
+
 /* На мобильных устройствах форма занимает весь экран */
 @media (max-width: 576px) {
     .feedback-popup {
         padding: 0;
+        align-items: flex-start;
+        padding-top: 20px;
     }
     
     .feedback-form-container {
         max-width: 100%;
-        height: 100%;
-        max-height: 100%;
-        border-radius: 0;
-        padding: 15px;
+        height: auto;
+        max-height: 90vh;
+        border-radius: 12px 12px 0 0;
+        padding: 20px;
+        margin: 0 10px;
     }
     
     .close-btn {
-        top: 15px;
-        right: 15px;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 }
 
-/* Стили для кнопки открытия формы */
+/* Анимация для кнопки открытия формы */
 #openFeedbackBtn {
     margin-left: 10px;
     white-space: nowrap;
+    transition: all 0.2s ease-in-out;
 }
+
+#openFeedbackBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Плавное появление элементов формы */
+.feedback-form-container > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: formElementAppear 0.5s ease forwards;
+}
+
+@keyframes formElementAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Задержки для последовательного появления элементов */
+.feedback-popup h2 {
+    animation-delay: 0.1s;
+}
+
+.feedback-popup .mb-3:nth-child(1) {
+    animation-delay: 0.15s;
+}
+
+.feedback-popup .mb-3:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.feedback-popup .mb-3:nth-child(3) {
+    animation-delay: 0.25s;
+}
+
+.feedback-popup .mb-3:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.feedback-popup .mb-3:nth-child(5) {
+    animation-delay: 0.35s;
+}
+
+.feedback-popup .mb-3:nth-child(6) {
+    animation-delay: 0.4s;
+}
+
+.feedback-popup .btn {
+    animation-delay: 0.45s;
+    }
