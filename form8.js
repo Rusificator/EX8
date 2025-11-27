@@ -4,90 +4,110 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
     const feedbackPopup = document.getElementById('feedbackPopup');
     const feedbackForm = document.getElementById('feedbackForm');
-    const formMessage = document.getElementById('feedback-formMessage');
-    const feedbackPhone = document.getElementById('feedback-phone');
+    const formMessage = document.getElementById('feedbackFormMessage');
+    
+    // Элементы формы с уникальными ID
+    const feedbackFullName = document.getElementById('feedbackFullName');
+    const feedbackEmail = document.getElementById('feedbackEmail');
+    const feedbackPhone = document.getElementById('feedbackPhone');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const feedbackPrivacyPolicy = document.getElementById('feedbackPrivacyPolicy');
     
     // URL для отправки формы
     const FORM_SUBMISSION_URL = 'https://formcarry.com/s/_na1c8kkBc4';
     
     // Флаг для отслеживания состояния формы
     let isFormOpen = false;
-    let isInitialLoad = true;
+
+    // Функция для валидации формы
+    function validateForm() {
+        let isValid = true;
+        
+        // Валидация ФИО
+        if (!feedbackFullName.value.trim()) {
+            showFieldError(feedbackFullName, 'Пожалуйста, введите ваше ФИО');
+            isValid = false;
+        } else {
+            hideFieldError(feedbackFullName);
+        }
+        
+        // Валидация email
+        if (!feedbackEmail.value || !isValidEmail(feedbackEmail.value)) {
+            showFieldError(feedbackEmail, 'Пожалуйста, введите корректный email');
+            isValid = false;
+        } else {
+            hideFieldError(feedbackEmail);
+        }
+        
+        // Валидация телефона
+        if (!feedbackPhone.value || !isValidPhone(feedbackPhone.value)) {
+            showFieldError(feedbackPhone, 'Пожалуйста, введите корректный номер телефона');
+            isValid = false;
+        } else {
+            hideFieldError(feedbackPhone);
+        }
+        
+        // Валидация сообщения
+        if (!feedbackMessage.value.trim() || feedbackMessage.value.trim().length < 10) {
+            showFieldError(feedbackMessage, 'Сообщение должно содержать минимум 10 символов');
+            isValid = false;
+        } else {
+            hideFieldError(feedbackMessage);
+        }
+        
+        // Валидация чекбокса
+        if (!feedbackPrivacyPolicy.checked) {
+            showFieldError(feedbackPrivacyPolicy, 'Необходимо принять условия соглашения');
+            isValid = false;
+        } else {
+            hideFieldError(feedbackPrivacyPolicy);
+        }
+        
+        return isValid;
+    }
     
-    // Функция для валидации телефона
-    function validatePhone(phone) {
-        // Разрешаем форматы: +7XXXXXXXXXX, 8XXXXXXXXXX, +375XXXXXXXXX, и другие международные форматы
-        const phoneRegex = /^(\+7|8|\+?\d{1,3})?[-\s]?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
+    // Функция для проверки email
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    // Функция для проверки телефона
+    function isValidPhone(phone) {
+        const phoneRegex = /^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/;
         return phoneRegex.test(phone);
+    }
+    
+    // Функция для показа ошибки поля
+    function showFieldError(field, message) {
+        field.classList.add('is-invalid');
+        field.classList.remove('is-valid');
+        
+        // Находим или создаем элемент для отображения ошибки
+        let errorElement = field.parentNode.querySelector('.invalid-feedback');
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+    }
+    
+    // Функция для скрытия ошибки поля
+    function hideFieldError(field) {
+        field.classList.remove('is-invalid');
+        field.classList.add('is-valid');
+        
+        let errorElement = field.parentNode.querySelector('.invalid-feedback');
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
     }
     
     // Функция для форматирования телефона
     function formatPhone(phone) {
-        // Удаляем все нецифровые символы кроме +
-        let cleaned = phone.replace(/[^\d+]/g, '');
-        
-        // Если номер начинается с 8, заменяем на +7
-        if (cleaned.startsWith('8') && cleaned.length === 11) {
-            cleaned = '+7' + cleaned.slice(1);
-        }
-        // Если номер начинается с 7 и нет +, добавляем +
-        else if (cleaned.startsWith('7') && cleaned.length === 11 && !cleaned.startsWith('+7')) {
-            cleaned = '+7' + cleaned.slice(1);
-        }
-        // Если номер без кода страны, добавляем +7
-        else if (cleaned.length === 10 && !cleaned.startsWith('+')) {
-            cleaned = '+7' + cleaned;
-        }
-        
-        return cleaned;
+        return phone.replace(/[^\d+]/g, '');
     }
     
-    // Функция для показа ошибки телефона
-    function showPhoneError(message) {
-        feedbackPhone.classList.add('is-invalid');
-        const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error') || 
-                        document.createElement('div');
-        errorDiv.className = 'phone-error text-danger mt-1 small';
-        errorDiv.textContent = message;
-        if (!feedbackPhone.parentNode.querySelector('.phone-error')) {
-            feedbackPhone.parentNode.appendChild(errorDiv);
-        }
-    }
-    
-    // Функция для скрытия ошибки телефона
-    function hidePhoneError() {
-        feedbackPhone.classList.remove('is-invalid');
-        feedbackPhone.classList.add('is-valid');
-        const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error');
-        if (errorDiv) {
-            errorDiv.remove();
-        }
-    }
-    
-    // Обработчик ввода телефона
-    feedbackPhone.addEventListener('input', function(e) {
-        const phone = e.target.value;
-        
-        if (phone === '') {
-            feedbackPhone.classList.remove('is-invalid', 'is-valid');
-            const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error');
-            if (errorDiv) errorDiv.remove();
-            return;
-        }
-        
-        if (validatePhone(phone)) {
-            hidePhoneError();
-            // Автоформатирование при вводе
-            const formatted = formatPhone(phone);
-            if (formatted !== phone) {
-                e.target.value = formatted;
-            }
-        } else {
-            showPhoneError('Введите корректный номер телефона');
-        }
-    });
-    
-    // Функция для открытия формы с анимацией
+    // Функция для открытия формы
     function openFeedbackForm() {
         if (isFormOpen) return;
         
@@ -101,17 +121,19 @@ document.addEventListener('DOMContentLoaded', function() {
             isFormOpen = true;
         }, 10);
         
-        // Изменяем URL с помощью History API только если это не начальная загрузка
-        if (!isInitialLoad) {
-            history.pushState({ formOpen: true }, '', '#feedback');
-        }
-        isInitialLoad = false;
+        // Изменяем URL с помощью History API
+        history.pushState({ formOpen: true }, '', '#feedback');
         
         // Восстанавливаем сохраненные данные
         restoreFormData();
+        
+        // Фокусируемся на первом поле
+        setTimeout(() => {
+            feedbackFullName.focus();
+        }, 300);
     }
     
-    // Функция для закрытия формы с анимацией
+    // Функция для закрытия формы
     function closeFeedbackForm() {
         if (!isFormOpen) return;
         
@@ -127,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Скрываем сообщение
         hideMessage();
         
-        // Если URL содержит #feedback, убираем его
+        // Возвращаем URL к исходному состоянию
         if (window.location.hash === '#feedback') {
             history.replaceState(null, '', window.location.pathname + window.location.search);
         }
@@ -150,12 +172,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция для сохранения данных формы в LocalStorage
     function saveFormData() {
         const formData = {
-            fullName: document.getElementById('feedback-fullName').value,
-            email: document.getElementById('feedback-email').value,
-            phone: document.getElementById('feedback-phone').value,
-            organization: document.getElementById('feedback-organization').value,
-            message: document.getElementById('feedback-message').value,
-            privacyPolicy: document.getElementById('feedback-privacyPolicy').checked
+            fullName: feedbackFullName.value,
+            email: feedbackEmail.value,
+            phone: feedbackPhone.value,
+            message: feedbackMessage.value,
+            privacyPolicy: feedbackPrivacyPolicy.checked
         };
         localStorage.setItem('feedbackFormData', JSON.stringify(formData));
     }
@@ -166,12 +187,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedData) {
             try {
                 const formData = JSON.parse(savedData);
-                document.getElementById('feedback-fullName').value = formData.fullName || '';
-                document.getElementById('feedback-email').value = formData.email || '';
-                document.getElementById('feedback-phone').value = formData.phone || '';
-                document.getElementById('feedback-organization').value = formData.organization || '';
-                document.getElementById('feedback-message').value = formData.message || '';
-                document.getElementById('feedback-privacyPolicy').checked = formData.privacyPolicy || false;
+                feedbackFullName.value = formData.fullName || '';
+                feedbackEmail.value = formData.email || '';
+                feedbackPhone.value = formData.phone || '';
+                feedbackMessage.value = formData.message || '';
+                feedbackPrivacyPolicy.checked = formData.privacyPolicy || false;
+                
+                // Валидируем восстановленные данные
+                validateFormOnInput();
             } catch (e) {
                 console.error('Ошибка при восстановлении данных:', e);
                 localStorage.removeItem('feedbackFormData');
@@ -184,13 +207,15 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('feedbackFormData');
     }
     
-    // Функция для сброса формы (без очистки LocalStorage)
+    // Функция для сброса формы
     function resetForm() {
         feedbackForm.reset();
-        // Сбрасываем классы валидации телефона
-        feedbackPhone.classList.remove('is-invalid', 'is-valid');
-        const errorDiv = feedbackPhone.parentNode.querySelector('.phone-error');
-        if (errorDiv) errorDiv.remove();
+        // Сбрасываем классы валидации
+        const formFields = [feedbackFullName, feedbackEmail, feedbackPhone, feedbackMessage];
+        formFields.forEach(field => {
+            field.classList.remove('is-invalid', 'is-valid');
+        });
+        feedbackPrivacyPolicy.classList.remove('is-invalid');
     }
     
     // Функция для отображения сообщения
@@ -199,9 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
         formMessage.className = isSuccess ? 'message success' : 'message error';
         formMessage.style.display = 'block';
         
-        // Автоматически скрываем сообщение только для ошибок
-        if (!isSuccess) {
-            setTimeout(hideMessage, 5000);
+        if (isSuccess) {
+            // Автоматически скрываем сообщение об успехе через 3 секунды
+            setTimeout(hideMessage, 3000);
         }
     }
     
@@ -210,15 +235,41 @@ document.addEventListener('DOMContentLoaded', function() {
         formMessage.style.display = 'none';
     }
     
+    // Функция для валидации при вводе
+    function validateFormOnInput() {
+        // Валидация ФИО
+        if (feedbackFullName.value.trim()) {
+            hideFieldError(feedbackFullName);
+        }
+        
+        // Валидация email
+        if (feedbackEmail.value && isValidEmail(feedbackEmail.value)) {
+            hideFieldError(feedbackEmail);
+        }
+        
+        // Валидация телефона
+        if (feedbackPhone.value && isValidPhone(feedbackPhone.value)) {
+            hideFieldError(feedbackPhone);
+        }
+        
+        // Валидация сообщения
+        if (feedbackMessage.value.trim() && feedbackMessage.value.trim().length >= 10) {
+            hideFieldError(feedbackMessage);
+        }
+        
+        // Валидация чекбокса
+        if (feedbackPrivacyPolicy.checked) {
+            hideFieldError(feedbackPrivacyPolicy);
+        }
+    }
+    
     // Обработчик отправки формы
     feedbackForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Валидация телефона перед отправкой
-        const phone = feedbackPhone.value;
-        if (phone && !validatePhone(phone)) {
-            showPhoneError('Пожалуйста, введите корректный номер телефона');
-            feedbackPhone.focus();
+        // Валидируем форму
+        if (!validateForm()) {
+            showMessage('Пожалуйста, исправьте ошибки в форме', false);
             return;
         }
         
@@ -237,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
             data.phone = formatPhone(data.phone);
         }
         
-        // Отправляем данные на сервер с помощью fetch
+        // Отправляем данные на сервер
         fetch(FORM_SUBMISSION_URL, {
             method: 'POST',
             headers: {
@@ -254,11 +305,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(data => {
-            // Formcarry возвращает статус в поле code или status
             if (data.code === 200 || data.status === 'success') {
-                // Показываем сообщение об успехе
                 showMessage('Форма успешно отправлена! Мы свяжемся с вами в ближайшее время.', true);
-                // Очищаем данные формы И LocalStorage только после успешной отправки
+                // Очищаем данные формы и LocalStorage после успешной отправки
                 setTimeout(() => {
                     resetForm();
                     clearFormData();
@@ -268,7 +317,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => {
-            // Показываем сообщение об ошибке
             showMessage('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз или свяжитесь с нами другим способом.', false);
         })
         .finally(() => {
@@ -278,22 +326,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Обработчики событий для элементов формы для сохранения данных
-    const formInputs = feedbackForm.querySelectorAll('input, textarea');
+    // Обработчики событий для элементов формы для сохранения данных и валидации
+    const formInputs = [feedbackFullName, feedbackEmail, feedbackPhone, feedbackMessage, feedbackPrivacyPolicy];
     formInputs.forEach(input => {
-        input.addEventListener('input', saveFormData);
-        input.addEventListener('change', saveFormData);
+        if (input.type === 'checkbox') {
+            input.addEventListener('change', function() {
+                saveFormData();
+                validateFormOnInput();
+            });
+        } else {
+            input.addEventListener('input', function() {
+                saveFormData();
+                validateFormOnInput();
+            });
+        }
     });
-    
-    // Обработчик для чекбокса
-    document.getElementById('feedback-privacyPolicy').addEventListener('change', saveFormData);
     
     // Обработчики событий для кнопок открытия/закрытия
-    openFeedbackBtn.addEventListener('click', function() {
-        isInitialLoad = false;
-        openFeedbackForm();
-    });
-    
+    openFeedbackBtn.addEventListener('click', openFeedbackForm);
     closeFeedbackBtn.addEventListener('click', closeFeedbackForm);
     
     // Обработчик события popstate для поддержки кнопки "Назад"
@@ -322,9 +372,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Закрытие формы при нажатии Escape
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && feedbackPopup.classList.contains('active')) {
+        if (e.key === 'Escape' && isFormOpen) {
             closeFeedbackForm();
         }
     });
 });
-          
