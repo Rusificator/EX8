@@ -6,7 +6,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* Убрали background-color для удаления фона */
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -35,6 +35,7 @@
     transform: scale(0.8);
     opacity: 0;
     transition: all 0.3s ease 0.1s;
+    border: 2px solid #007bff;
 }
 
 .feedback-popup.active .feedback-form-container {
@@ -80,6 +81,14 @@
 
 .feedback-popup .form-check-input {
     margin-right: 8px;
+}
+
+.feedback-popup .form-check-input.is-invalid {
+    border-color: #dc3545;
+}
+
+.feedback-popup .form-check-input.is-valid {
+    border-color: #28a745;
 }
 
 .feedback-popup .btn {
@@ -176,19 +185,18 @@
     cursor: pointer;
 }
 
-.phone-error {
-    font-size: 0.8rem;
-    margin-top: 4px;
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
 }
 
 /* Стили для индикации обязательных полей */
 .form-label:after {
     content: " *";
     color: #dc3545;
-}
-
-.form-label:not([for="feedback-phone"]):not([for="feedback-organization"]):after {
-    content: "";
 }
 
 /* На мобильных устройствах форма занимает весь экран */
@@ -267,10 +275,6 @@
     animation-delay: 0.35s;
 }
 
-.feedback-popup .mb-3:nth-child(6) {
+.feedback-popup .btn {
     animation-delay: 0.4s;
 }
-
-.feedback-popup .btn {
-    animation-delay: 0.45s;
-    }
