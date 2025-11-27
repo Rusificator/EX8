@@ -38,7 +38,7 @@
                             <li class="nav-item"><a class="nav-link text-white" href="#calculator">Калькулятор</a></li>
                             <li class="nav-item"><a class="nav-link text-white" href="#form">Форма</a></li>
                             <li class="nav-item"><a class="nav-link text-white" href="#gallery">Галерея</a></li>
-                            <li class="nav-item"><button id="openFeedbackBtn" class="nav-link text-white">Обратная связь</button></li>
+                           <li class="nav-item"><button id="openFeedbackBtn" class="nav-link text-white">Обратная связь</button></li>
                         </ul>
                     </nav>
                 </div>
@@ -527,46 +527,49 @@
 
 
 
-<!-- Попап с формой обратной связи -->
-<div id="feedbackPopup" class="feedback-popup">
-    <div class="feedback-form-container">
-        <button class="close-btn" id="closeFeedbackBtn">&times;</button>
-        <h2>Обратная связь</h2>
-        <form id="feedbackForm">
-            <div class="mb-3">
-                <label for="feedback-fullName" class="form-label">ФИО *</label>
-                <input type="text" class="form-control" id="feedback-fullName" name="fullName" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="feedback-email" class="form-label">Email *</label>
-                <input type="email" class="form-control" id="feedback-email" name="email" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="feedback-phone" class="form-label">Телефон</label>
-                <input type="tel" class="form-control" id="feedback-phone" name="phone" placeholder="+7 (XXX) XXX-XX-XX">
-                <!-- Сообщение об ошибке будет добавляться динамически -->
-            </div>
-            
-            <div class="mb-3">
-                <label for="feedback-message" class="form-label">Сообщение *</label>
-                <textarea class="form-control" id="feedback-message" name="message" rows="4" required></textarea>
-            </div>
-            
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="feedback-privacyPolicy" name="privacyPolicy" required>
-                <label class="form-check-label" for="feedback-privacyPolicy">
-                    Согласен с политикой обработки персональных данных *
-                </label>
-            </div>
-            
-            <button type="submit" class="btn btn-primary w-100">Отправить</button>
-            
-            <div id="feedback-formMessage" class="message" style="display: none;"></div>
-        </form>
+ <div id="feedbackPopup" class="feedback-popup">
+        <div class="feedback-form-container">
+            <button class="close-btn" id="closeFeedbackBtn">&times;</button>
+            <h2>Обратная связь</h2>
+            <form id="feedbackForm">
+                <div class="mb-3">
+                    <label for="feedbackFullName" class="form-label">ФИО</label>
+                    <input type="text" class="form-control" id="feedbackFullName" name="fullName" required>
+                    <div class="invalid-feedback">Пожалуйста, введите ваше ФИО</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="feedbackEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="feedbackEmail" name="email" required>
+                    <div class="invalid-feedback">Пожалуйста, введите корректный email</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="feedbackPhone" class="form-label">Телефон </label>
+                    <input type="tel" class="form-control" id="feedbackPhone" name="phone" required pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$">
+                    <div class="invalid-feedback">Пожалуйста, введите корректный номер телефона</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="feedbackMessage" class="form-label">Сообщение </label>
+                    <textarea class="form-control" id="feedbackMessage" name="message" rows="4" required minlength="10"></textarea>
+                    <div class="invalid-feedback">Сообщение должно содержать минимум 10 символов</div>
+                </div>
+                
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="feedbackPrivacyPolicy" name="privacyPolicy" required>
+                    <label class="form-check-label" for="feedbackPrivacyPolicy">
+                        Согласен с политикой обработки персональных данных *
+                    </label>
+                    <div class="invalid-feedback">Необходимо принять условия соглашения</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">Отправить</button>
+                
+                <div id="feedbackFormMessage" class="message" style="display: none;"></div>
+            </form>
+        </div>
     </div>
-</div>
 
 </body>
 </html>
