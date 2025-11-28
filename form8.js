@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const feedbackPrivacyPolicy = document.getElementById('feedbackPrivacyPolicy');
     
     // URL
-    const FORM_SUBMISSION_URL = 'https://formcarry.com/s/_na1c8kkBc4';
+    const FORM_SUBMISSION_URL = 'https://forms.yandex.ru/u/69294a0295add500f0b98fdc';
     
     // Флаг для состояния
     let isFormOpen = false;
@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 
 
 
