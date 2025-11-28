@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const feedbackMessage = document.getElementById('feedbackMessage');
     const feedbackPrivacyPolicy = document.getElementById('feedbackPrivacyPolicy');
     
-    // UR
+    // URL
     const FORM_SUBMISSION_URL = 'https://formcarry.com/s/_na1c8kkBc4';
     
     // Флаг для состояния
@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 
 
 
