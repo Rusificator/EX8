@@ -1,4 +1,4 @@
-/* Стили для формы обратной связи */
+
 .feedback-popup {
     display: none;
     position: fixed;
@@ -278,3 +278,4 @@
 .feedback-popup .btn {
     animation-delay: 0.4s;
 }
+
